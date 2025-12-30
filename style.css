@@ -85,7 +85,23 @@
             border-radius: 100px;
             overflow: hidden;
         }
-      
+        .lkd{
+          width: 20px;
+          height:20px;
+        }
+        .insta{
+          width: 18px;
+          height:18px;
+          padding: 2px 12px;
+        }
+        .icons{
+          display: flex;
+          position: relative;
+          width: 87.5vw;
+          justify-content: right;
+          top: -51px;
+          
+        }
 
         .work{
             display:flex;
@@ -212,7 +228,7 @@
             
             width: 100%;
             max-width: 100%;
-            margin: 0px 10px;
+            margin: 0px auto;
             height: 100px;
             min-height: 50px;
             border: 1px solid #e0e0e0;
