@@ -97,9 +97,11 @@ header {
 .icons {
   display: flex;
   justify-content: flex-end;
+  align-self: center;
   align-items: center;
   gap:12px;
   width:32%;
+  
 
 }
 
