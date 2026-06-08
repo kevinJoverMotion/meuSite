@@ -22,6 +22,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/@rive-app/canvas"></script>
+
+  <style>
+    .reel {
+      display: flex;
+      
+      justify-content: center;
+      align-items: center;
+      
+      margin: 40px 40px 40px 40px;
+      border: 0px;
+      border-radius: 6px;
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+  </style>
 </head>
 
 <body>
@@ -59,7 +74,15 @@
     <button onclick="scrollToProjects()" id="portfo" class="port">Portfolio</button>
   </div>
 
+ 
+
+ 
+ <iframe class="reel" src="https://player.vimeo.com/video/1199431609?badge=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="outbound.com (1080p)">
+  </iframe>
+ 
   <div class="media-grid" id="portfo">
+    
     <a href="/outbound-launch/">
       <div class="media-card">
         <img class="static" src="outbound.png" alt="Outbound UX motion design project">
