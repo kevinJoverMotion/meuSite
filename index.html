@@ -4,148 +4,290 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- SEO Metadata (safe) -->
-  <title>Kevin Jover — Motion Designer & Video Editing Portfolio</title>
-  <meta name="description" content="Kevin Jover is a motion designer & Video editor focused on Video production, web animation, and interactive experiences. Portfolio showcases selected projects.">
+  <!-- SEO Metadata (preserved) -->
+  <title>Kevin Jover — Motion Design & Video Editing Portfolio</title>
+  <meta name="description" content="Kevin Jover works in motion design & video editing, focused on video production, web animation, and interactive experiences. Portfolio showcases selected projects.">
 
   <!-- Social Sharing (Open Graph) -->
-  <meta property="og:title" content="Kevin Jover — Motion Designer & Video Editor Portfolio">
-  <meta property="og:description" content="Motion design and Video Editing portfolio by Kevin Jover. Explore projects and interactive animations.">
+  <meta property="og:title" content="Kevin Jover — Motion Design & Video Editor Portfolio">
+  <meta property="og:description" content="Motion design and video editing portfolio by Kevin Jover. Explore projects and interactive animations.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kevinjovermotion.github.io/meuSite/">
-  
 
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="https://unpkg.com/@rive-app/canvas"></script>
-
-  <style>
-    .reel {
-      display: flex;
-      
-      justify-content: center;
-      align-items: center;
-      
-      margin: 40px 40px 40px 40px;
-      border: 0px;
-      border-radius: 6px;
-      aspect-ratio: 16 / 9;
-      position: relative;
-    }
-  </style>
 </head>
 
 <body>
 
-  <div class="info">
-    <header>
-      
-    <div class="namePic">
-      
-       <div class="nameDesc">
-      <span class="name">Kevin Jover</span>
-      <div class="desc">Motion Designer</div>
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <canvas class="preloader-logo-canvas" id="preloaderLogoCanvas"></canvas>
+    <div class="preloader-name" id="preloaderName">Kevin Jover</div>
+    <div class="preloader-bar"></div>
+  </div>
+
+  <!-- ============ CUSTOM CURSOR ============ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ============ SCROLL PROGRESS ============ -->
+  <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+  <!-- ============ NOISE TEXTURE ============ -->
+  <svg class="noise" xmlns="http://www.w3.org/2000/svg">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix type="saturate" values="0"></feColorMatrix>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noiseFilter)"></rect>
+  </svg>
+
+  <!-- ============ NAVIGATION ============ -->
+  <nav class="nav" id="siteNav">
+    <div class="nav-inner">
+      <a href="#top" class="nav-brand" aria-label="Kevin Jover — home">
+        <canvas class="nav-logo-canvas" id="logoCanvas"></canvas>
+        <span class="nav-brand-text">
+          <span class="nav-brand-name">Kevin Jover</span>
+          <span class="nav-brand-role" data-i18n="nav.role">Motion &amp; Video Editor</span>
+        </span>
+        </a>
+
+      <div class="nav-links">
+        <a href="#about" class="link-underline" data-scroll data-i18n="nav.about">About</a>
+        <a href="#work" class="link-underline" data-scroll data-i18n="nav.work">Portfolio</a>
+        <a href="#contact" class="link-underline" data-scroll data-i18n="nav.contact">Let's Work</a>
+      </div>
+
+      <div class="nav-social">
+        <a href="https://www.linkedin.com/in/kevin-jover/" target="_blank" rel="noopener" title="LinkedIn — Kevin Jover">
+          <img src="linkedin.png" alt="LinkedIn">
+        </a>
+        <a href="https://www.instagram.com/kev1njover/" target="_blank" rel="noopener" title="Instagram — Kevin Jover">
+          <img src="instagram.png" alt="Instagram">
+        </a>
+
+        <div class="lang-switch" id="langSwitch" role="group" aria-label="Language switch">
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="pt">PT</button>
+        </div>
+      </div>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============ MOBILE MENU ============ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" data-scroll data-close-menu data-i18n="nav.about">About</a>
+    <a href="#work" data-scroll data-close-menu data-i18n="nav.work">Portfolio</a>
+    <a href="#contact" data-scroll data-close-menu data-i18n="nav.contact">Let's Work</a>
+
+    <div class="lang-switch lang-switch--mobile" id="langSwitchMobile" role="group" aria-label="Language switch">
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="pt">PT</button>
     </div>
 
+    <div class="mobile-menu-social">
+      <a href="https://www.linkedin.com/in/kevin-jover/" target="_blank" rel="noopener" title="LinkedIn">
+        <img src="linkedin.png" alt="LinkedIn">
+        </a>
+      <a href="https://www.instagram.com/kev1njover/" target="_blank" rel="noopener" title="Instagram">
+        <img src="instagram.png" alt="Instagram">
+        </a>
     </div>
- 
-    <canvas class="canvas"></canvas>
-
-    
-
-    <div class="icons">
-      
-      
-      <a href="https://www.linkedin.com/in/kevin-jover/" target="_blank" title="LinkedIn — Kevin Jover">
-        <img class="lkd" src="linkedin.png" alt="LinkedIn"></a>
-      <a href="https://www.instagram.com/kev1njover/" target="_blank" title="Instagram — Kevin Jover">
-        <img class="insta" src="instagram.png" alt="Instagram"></a>
-    
-      </div>
-      </header>
   </div>
 
-  <div class="buttons">
-    <button onclick="scrollToContact()" id="work" class="work">Let's work</button>
-    <button onclick="scrollToProjects()" id="portfo" class="port">Portfolio</button>
+  <!-- ============ HERO / DEMO REEL ============ -->
+  <header class="hero" id="top">
+    <div class="hero-media" aria-hidden="true">
+      <iframe id="heroReelBg"
+        src="https://player.vimeo.com/video/1200821128?badge=0&autopause=0&background=1&muted=1&loop=1&autoplay=1"
+        allow="autoplay; fullscreen" title="" tabindex="-1"></iframe>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow eyebrow" data-i18n="hero.eyebrow">Motion &amp; Video — Portfolio 2026</div>
+
+      <h1 class="visually-hidden">Kevin Jover — Motion &amp; Video Editor</h1>
+
+      <p class="hero-sub hero-sub--main" data-i18n="hero.sub">Motion &amp; Video Editor</p>
+
+      <p class="hero-desc" data-i18n="hero.desc">Building cinematic motion, thoughtful video edits, and interactive digital
+        experiences for brands that want to feel unforgettable.</p>
+
+      <div class="hero-actions">
+        <button class="btn btn-play" id="watchReelBtn">
+          <svg class="play-icon" viewBox="0 0 12 12" fill="currentColor"><path d="M1 0.5L11 6L1 11.5V0.5Z"/></svg>
+          <span data-i18n="hero.watchReel">Watch Reel</span>
+        </button>
+        <a href="#work" class="btn btn-ghost" data-scroll data-i18n="hero.viewPortfolio">View Portfolio</a>
+      </div>
+    </div>
+
+    <a href="#work" class="scroll-cue" data-scroll aria-label="Scroll to featured projects">
+      <span data-i18n="hero.scrollCue">Featured Projects</span>
+      <span class="scroll-cue-arrow"></span>
+      <span aria-hidden="true">↓</span>
+        </a>
+  </header>
+
+  <!-- ============ REEL MODAL ============ -->
+  <div class="reel-modal" id="reelModal" role="dialog" aria-modal="true" aria-label="Demo reel player">
+    <div class="reel-modal-inner">
+      <button class="reel-modal-close" id="reelModalClose" aria-label="Close reel">&times;</button>
+      <iframe id="reelModalIframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Kevin Jover — Demo Reel"></iframe>
+    </div>
   </div>
 
- 
-
- 
- <iframe class="reel" src="https://player.vimeo.com/video/1200821128?badge=0&autopause=0"
-        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="outbound.com (1080p)">
-  </iframe>
- 
-  <div class="media-grid" id="portfo">
-    
-    <a href="/outbound-launch/">
-      <div class="media-card">
-        <img class="static" src="outbound.png" alt="Outbound UX motion design project">
-        <img class="gif" src="/outbound-launch/outbound.gif" alt="Outbound UX motion animation">
+  <!-- ============ ABOUT ============ -->
+  <section class="about" id="about">
+    <div class="container about-inner reveal">
+      <div class="about-header">
+        <img src="me.jpg" alt="Kevin Jover portrait" class="about-photo" loading="lazy">
+        <div class="about-heading">
+          <div class="eyebrow" data-i18n="about.eyebrow">About</div>
+          <h2 class="section-heading">Kevin</h2>
+        </div>
       </div>
-    </a>
 
-    <a href="/sicredi/">
-      <div class="media-card">
-        <img class="static" src="Sicredi_Verao.jpg" alt="Sicredi summer campaign animation">
-        <img class="gif" src="Sicredi_Verao.gif" alt="Sicredi summer campaign animated preview">
+      <div class="about-text">
+        <p data-i18n="about.p1">I'm a Motion &amp; Video Editor with 7+ years of experience creating engaging
+          animations and polished video content for brands, agencies, and digital creators. My work
+          focuses on clear visual storytelling, combining motion, editing, and design to create
+          content that captures attention and communicates ideas effectively.</p>
+        <p data-i18n="about.p2">From social media campaigns and YouTube videos to product animations and UI motion, I
+          enjoy turning concepts into dynamic visuals that leave a lasting impression.</p>
       </div>
-    </a>
-
-    <a href="/sicredi-conselheiros/">
-      <div class="media-card">
-        <img class="static" src="SicrediConselheiros.png" alt="Sicredi Conselheiros motion project">
-        <img class="gif" src="SicrediConselheiros.gif" alt="Sicredi Conselheiros animated preview">
-      </div>
-    </a>
-
-    <a href="/eixo-platina/">
-      <div class="media-card">
-        <img class="static" src="Eixo-Platina.png" alt="Eixo Platina motion design">
-        <img class="gif" src="Eixo-Platina.gif" alt="Eixo Platina animated preview">
-      </div>
-    </a>
-
-    <a href="/verify-factory/">
-      <div class="media-card">
-        <img class="static" src="factory.png" alt="Factory motion design">
-        <img class="gif" src="factory.gif" alt="Factory motion animation preview">
-      </div>
-    </a>
-
-    <a href="/Halloween-animation/">
-      <div class="media-card">
-        <img class="static" src="Trick or treat_.png" alt="Trick or Treat motion project">
-        <img class="gif" src="Trick-or-treat.gif" alt="Trick or Treat animated preview">
-      </div>
-    </a>
-  </div>
-
-  <section class="contact" id="contact">
-    <h2>Work with me</h2>
-
-    <form id="contact-form" action="https://formspree.io/f/xojqryyg" method="POST">
-      <div class="nameContact">Name</div>
-      <input type="text" name="name" class="inputName" required>
-
-      <div class="nameEmail">Email</div>
-      <input type="email" name="email" class="inputEmail" required>
-
-      <div class="message">Message</div>
-      <textarea name="message" id="messageBox" required></textarea>
-
-      <button type="submit" class="buttonSend">Send</button>
-
-      <p id="form-status" style="display:none;"></p>
-    </form>
-
+    </div>
   </section>
 
-  <script src="scripts.js"></script>
+  <!-- ============ FEATURED PROJECTS ============ -->
+  <section class="projects" id="work">
+    <div class="container">
+      <div class="projects-head reveal">
+        <div class="eyebrow" data-i18n="projects.eyebrow">Selected work</div>
+        <h2 class="section-heading" data-i18n="projects.heading">Featured Projects</h2>
+      </div>
+
+      <div class="projects-grid" id="portfo">
+
+        <a href="/outbound-launch/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="outbound.png" alt="Outbound UX motion design project">
+            <img class="gif" loading="lazy" src="outbound.gif" alt="Outbound UX motion animation">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+        <a href="/sicredi/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="Sicredi_Verao.jpg" alt="Sicredi summer campaign animation">
+            <img class="gif" loading="lazy" src="Sicredi_Verao.gif" alt="Sicredi summer campaign animated preview">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+        <a href="/sicredi-conselheiros/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="SicrediConselheiros.png" alt="Sicredi Conselheiros motion project">
+            <img class="gif" loading="lazy" src="SicrediConselheiros.gif" alt="Sicredi Conselheiros animated preview">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+        <a href="/eixo-platina/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="Eixo-Platina.png" alt="Eixo Platina motion design">
+            <img class="gif" loading="lazy" src="Eixo-Platina.gif" alt="Eixo Platina animated preview">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+        <a href="/verify-factory/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="factory.png" alt="Factory motion design">
+            <img class="gif" loading="lazy" src="factory.gif" alt="Factory motion animation preview">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+        <a href="/Halloween-animation/" class="project-card">
+          <div class="project-media" data-ratio="wide">
+            <img class="static" loading="lazy" src="Trick or treat_.png" alt="Trick or Treat motion project">
+            <img class="gif" loading="lazy" src="Trick-or-treat.gif" alt="Trick or Treat animated preview">
+            <div class="project-media-overlay"></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner reveal">
+      <div class="eyebrow" data-i18n="contact.eyebrow">Get in touch</div>
+      <h2 class="section-heading" data-i18n="contact.heading">Let's Work Together</h2>
+      <p class="contact-desc" data-i18n="contact.desc">Have a project in mind? Tell me a little about it and I'll get back to you shortly.</p>
+
+      <form id="contact-form" action="https://formspree.io/f/xojqryyg" method="POST">
+        <div class="field">
+          <label for="input-name" data-i18n="contact.nameLabel">Name</label>
+          <input id="input-name" type="text" name="name" class="inputName" placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder" required>
+          <span class="field-underline"></span>
+        </div>
+
+        <div class="field">
+          <label for="input-email" data-i18n="contact.emailLabel">Email</label>
+          <input id="input-email" type="email" name="email" class="inputEmail" placeholder="you@email.com" data-i18n-placeholder="contact.emailPlaceholder" required>
+          <span class="field-underline"></span>
+        </div>
+
+        <div class="field">
+          <label for="messageBox" data-i18n="contact.messageLabel">Message</label>
+          <textarea id="messageBox" name="message" placeholder="Tell me about your project" data-i18n-placeholder="contact.messagePlaceholder" required></textarea>
+          <span class="field-underline"></span>
+        </div>
+
+        <button type="submit" class="btn contact-submit" data-i18n="contact.submit">Send Message</button>
+
+        <p id="form-status" class="form-status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span class="footer-copy">© <span id="footerYear"></span> Kevin Jover. <span data-i18n="footer.rights">All rights reserved.</span></span>
+
+      <div class="footer-links">
+        <a href="#top" class="link-underline" data-scroll data-i18n="nav.work">Portfolio</a>
+        <a href="#contact" class="link-underline" data-scroll data-i18n="nav.contactFooter">Contact</a>
+      </div>
+
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/in/kevin-jover/" target="_blank" rel="noopener" title="LinkedIn">
+          <img src="linkedin.png" alt="LinkedIn">
+        </a>
+        <a href="https://www.instagram.com/kev1njover/" target="_blank" rel="noopener" title="Instagram">
+          <img src="instagram.png" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/@rive-app/canvas" defer></script>
+  <script src="https://player.vimeo.com/api/player.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
