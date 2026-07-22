@@ -1,178 +1,403 @@
 <!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Sicredi Verão — Kevin Jover</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* ============================================================
+       SICREDI VERÃO — project page
+       Reuses main site tokens/components for visual cohesion
+       ============================================================ */
 
-<html lang = "eng">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">    
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-         <link rel="stylesheet" href="style.css">
-      <script src="script.js"></script>
-      <script>
-        
-function scrollToStart(){
-  document.querySelector("#start").scrollIntoView({behavior:"smooth"});
-}
-      </script>
-        <style>
+    .project-page {
+      padding-top: var(--nav-h);
+      padding-bottom: clamp(60px, 8vh, 100px);
+    }
 
-        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+    /* Hide native cursor (custom cursor replaces it) */
+    body {
+      cursor: none;
+    }
 
-            *{
-              font-family: "Lato" , sans-serif;
-              color: #111;
-            }
-            .main{
-              
-              display: flex;
-              flex-flow: column;
-              justify-content: center;
-              align-items: center;
-              
-            }
-            a{
-              text-decoration: none;
-              color: black;
-            }
-            .proj1{
-              display:flex;
-              justify-content: center;
-              align-items:center;
-               width: 90vw;             
-               max-width: 1200px;       
-               
-               aspect-ratio: 16 / 9;
-               position: relative;
-            }
+    /* Top bar */
+    .project-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 150;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      background: rgba(5, 5, 5, 0.55);
+      border-bottom: 1px solid var(--border);
+    }
 
-            .proj1 iframe {
+    .project-top-inner {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
 
-              width: 80%;
-              height: 80%;
-              border: 0;
-              padding: 0;
-              
-            }
-            p{
-              width: 90vw;
-              font-size: 22px;
-              text-align: start;
-              padding: 40px;
-              margin: 0;
-            }
-            .dvShots{
-              display: flex;
-              flex-flow: column;
-              align-items: center;
-              align-content: center;
-              width: 90vw;
-            }
-            .shots{
-              display: flex;
-              flex-flow: row;
-              align-items: center;
-            }
-           .dvShots img{
-              flex-basis: 200px;
-              height: 100px;
-            }
-            .credits{
-              display: flex;
-              flex-flow: column;
-              justify-content: center;
-              align-items: center;
-              
-            }
-            .credits p{
-              text-align: center;
-              padding: 4px;
-              font-size: 16px;
-              
-            }
-            .tks{
-              color: grey;
-              margin-top: 60px;
-              margin-bottom: 60px;
-            }
-            .arrow{
-              margin: 0;
-              padding: 0;
-              font-size: 50px;
-            }
-            .arrow a, #up{
-              color:grey;
-              width: 100vw;
-              transition: 200ms ease;
-            }
-            .arrow a:hover, #up:hover{
-              color: rgb(0, 0, 0);
-            }
-            .about{
-              margin: 0;
-            }
-            #arrowUp{
-              margin-bottom: 40px;
-              cursor: pointer;
-            }
-             @media (max-width: 600px) {
-              h1{
-                font-size: 22px;
-              }
-              h2{
-                font-size: 16px;
-              }
-              p{
-                font-size: 12px;
-              }
-              .credits{
-                width: 200px;
-              }
-        
-            }
-          </style>   
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text-muted);
+      transition: color var(--dur-fast) var(--ease-out);
+    }
+
+    .back-link .arrow {
+      display: inline-block;
+      transition: transform var(--dur-med) var(--ease-out);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    .back-link:hover .arrow {
+      transform: translateX(-4px);
+    }
+
+    /* Hero */
+    .project-hero {
+      padding-top: clamp(48px, 8vh, 96px);
+      padding-bottom: clamp(40px, 6vh, 72px);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .project-title {
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      max-width: 900px;
+    }
+
+    .project-title em {
+      font-style: normal;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .project-lead {
+      max-width: 620px;
+      color: var(--text-muted);
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.7;
+    }
+
+    /* Video */
+    .project-video {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent-glow);
+    }
+
+    .project-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Two-column body */
+    .project-body {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+      padding: clamp(60px, 9vh, 110px) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+    }
+
+    .project-aside .eyebrow {
+      margin-bottom: 6px;
+    }
+
+    .project-aside h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.8;
+      max-width: 680px;
+    }
+
+    .project-content p {
+      margin: 0;
+    }
+
+    .lang-block + .lang-block {
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .lang-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    /* Credits */
+    .project-credits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: clamp(60px, 9vh, 110px) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .credit-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      transition: border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+    }
+
+    .credit-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .credit-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .credit-value {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    /* Thanks / footer */
+    .project-thanks {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: clamp(80px, 12vh, 140px) 0 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .thanks-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .thanks-mark::before,
+    .thanks-mark::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent-gradient);
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 32px 0;
+      margin-top: clamp(40px, 6vh, 64px);
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .scroll-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    }
+
+    .scroll-top:hover {
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .project-body {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .project-aside {
+        position: static;
+      }
+
+      .project-credits {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <main class="main">
-        <p class="arrow"><a href="https://kevinjover.com">&larr;</a></p>
-        <h1 id="start">Sicredi verão</h1>
-        <div class="proj1">
-          
-          <iframe
-             src="https://player.vimeo.com/video/1150120603?badge=0&autopause=0"
-    allow="autoplay; fullscreen; picture-in-picture"
-    allowfullscreen
-    title="">
-          </iframe>
+  <!-- Top bar -->
+  <header class="project-top">
+    <div class="project-top-inner">
+      <a class="back-link" href="https://kevinjover.com">
+        <span class="arrow">&larr;</span>
+        <span>Back to portfolio</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container project-page">
+    <!-- Hero -->
+    <section class="project-hero reveal">
+      <span class="eyebrow">Project / Sicredi · Summer Campaign</span>
+      <h1 class="project-title">Sicredi <em>·</em> Verão</h1>
+      <p class="project-lead">Animation developed for Sicredi in collaboration with Dr. Smith production studio. A tight-deadline, character-driven project that demanded speed, coordination, and a consistent final result.</p>
+    </section>
+
+    <!-- Video -->
+    <div class="project-video reveal">
+      <iframe
+        src="https://player.vimeo.com/video/1150120603?badge=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        title="Sicredi Verão">
+      </iframe>
+    </div>
+
+    <!-- Body -->
+    <section class="project-body">
+      <aside class="project-aside reveal">
+        <span class="eyebrow">About</span>
+        <h2>Sobre o projeto / About the project</h2>
+      </aside>
+
+      <div class="project-content reveal">
+        <div class="lang-block">
+          <span class="lang-tag">PT</span>
+          <p>Trabalho realizado para o Sicredi, desenvolvido em parceria com a produtora Dr. Smith.</p>
+          <p>O projeto foi bastante desafiador devido ao prazo curto e à grande quantidade de personagens, exigindo agilidade e organização em todas as etapas da produção. Ainda assim, o resultado final foi consistente e atendeu plenamente aos objetivos do projeto.</p>
         </div>
-
-        <h2 class="about">Sobre o projeto | About the project</h2>
-
-        <p>Trabalho realizado para o Sicredi, desenvolvido em parceria com a produtora Dr. Smith.
-
-O projeto foi bastante desafiador devido ao prazo curto e à grande quantidade de personagens, exigindo agilidade e organização em todas as etapas da produção. Ainda assim, o resultado final foi consistente e atendeu plenamente aos objetivos do projeto.</p>
-
-        <span>_________</span>
-
-        <p>Project developed for Sicredi, in collaboration with the production company Dr. Smith.
-
-It was a highly challenging project due to the tight deadline and the large number of characters, requiring fast-paced execution and strong production coordination. Despite the constraints, the final result successfully met the project’s goals.</p>
-    
+        <div class="lang-block">
+          <span class="lang-tag">EN</span>
+          <p>Project developed for Sicredi, in collaboration with the production company Dr. Smith.</p>
+          <p>It was a highly challenging project due to the tight deadline and the large number of characters, requiring fast-paced execution and strong production coordination. Despite the constraints, the final result successfully met the project's goals.</p>
+        </div>
       </div>
+    </section>
 
-      <div class="credits">
-        <h3><strong>Créditos | Project Team</strong></h3>
-        <span><p><strong>Animation:</strong> Kevin Jover</p></span>
-        <span><p><strong>Design:</strong> Dr smith</p></span>
-        <span><p><strong>Client:</strong> Dr Smith! |  Animation studio</p></span>
-        <p class="tks">Thanks for watching!</p>
+    <!-- Credits -->
+    <section class="project-credits">
+      <div class="credit-card reveal">
+        <span class="credit-label">Animation</span>
+        <span class="credit-value">Kevin Jover</span>
       </div>
+      <div class="credit-card reveal">
+        <span class="credit-label">Design</span>
+        <span class="credit-value">Dr Smith</span>
+      </div>
+      <div class="credit-card reveal">
+        <span class="credit-label">Client</span>
+        <span class="credit-value">Dr Smith! Animation Studio</span>
+      </div>
+    </section>
 
-      <p class="arrow" onclick="scrollToStart()" id="arrowUp"><a>&uarr;</a></p>      
-</main>
+    <!-- Thanks -->
+    <section class="project-thanks reveal">
+      <span class="thanks-mark">Thanks for watching</span>
+      <a class="scroll-top" onclick="scrollToStart()">&uarr; Back to top</a>
+    </section>
 
-      
+    <div class="project-footer">
+      <span>&copy; Kevin Jover — Sicredi Verão</span>
+      <a class="scroll-top" href="https://kevinjover.com">kevinjover.com &rarr;</a>
+    </div>
+  </main>
+
+  <!-- Custom cursor (matches main site) -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <script src="../script.js"></script>
+  <script>
+    function scrollToStart() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Reveal on scroll (matches main site pattern)
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
 </body>
-
-
+</html>
