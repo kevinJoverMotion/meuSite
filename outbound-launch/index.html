@@ -1,242 +1,494 @@
 <!doctype html>
-
-<html lang="eng">
-
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
+  <title>Outbound Launch — Kevin Jover</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
-  <script>
-
-    function scrollToStart() {
-      document.querySelector("#start").scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
+  <link rel="stylesheet" href="../style.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+    /* ============================================================
+       OUTBOUND LAUNCH — project page
+       Reuses main site tokens/components for visual cohesion
+       ============================================================ */
 
-    * {
-      font-family: "Lato", sans-serif;
-      color: #b8b8b8;
-      background: rgba(0, 0, 0, 0.97);
+    .project-page {
+      padding-top: var(--nav-h);
+      padding-bottom: clamp(60px, 8vh, 100px);
     }
 
-    .main {
+    /* Hide native cursor (custom cursor replaces it) */
+    body {
+      cursor: none;
+    }
 
+    /* Top bar */
+    .project-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 150;
+      height: var(--nav-h);
       display: flex;
-      flex-flow: column wrap;
-      justify-content: center;
       align-items: center;
-
-
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      background: rgba(5, 5, 5, 0.55);
+      border-bottom: 1px solid var(--border);
     }
 
-    a {
-      text-decoration: none;
-      color: black;
-    }
-
-    .proj1 {
+    .project-top-inner {
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding-inline: var(--gutter);
       display: flex;
-      justify-content: center;
       align-items: center;
-      width: 90vw;
-      max-width: 1200px;
+      justify-content: space-between;
+      gap: 24px;
+    }
 
-      aspect-ratio: 16 / 9;
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--text-muted);
+      transition: color var(--dur-fast) var(--ease-out);
+    }
+
+    .back-link .arrow {
+      display: inline-block;
+      transition: transform var(--dur-med) var(--ease-out);
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    .back-link:hover .arrow {
+      transform: translateX(-4px);
+    }
+
+    /* Hero */
+    .project-hero {
+      padding-top: clamp(48px, 8vh, 96px);
+      padding-bottom: clamp(40px, 6vh, 72px);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .project-title {
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+      max-width: 900px;
+    }
+
+    .project-title a {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      transition: opacity var(--dur-fast) var(--ease-out);
+    }
+
+    .project-title a:hover {
+      opacity: 0.8;
+    }
+
+    .project-title em {
+      font-style: normal;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .project-lead {
+      max-width: 620px;
+      color: var(--text-muted);
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.7;
+    }
+
+    /* Video */
+    .project-video {
       position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--accent-glow);
     }
 
-    .proj1 iframe {
-
-      width: 80%;
-      height: 80%;
+    .project-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       border: 0;
-      padding: 0;
-
     }
 
-    p {
-      width: 90vw;
-      font-size: 22px;
-      text-align: start;
-      padding: 40px;
+    /* Two-column body */
+    .project-body {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(40px, 6vw, 96px);
+      align-items: start;
+      padding: clamp(60px, 9vh, 110px) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+    }
+
+    .project-aside .eyebrow {
+      margin-bottom: 6px;
+    }
+
+    .project-aside h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .project-content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.8;
+      max-width: 680px;
+    }
+
+    .project-content p {
       margin: 0;
     }
 
-    .dvShots {
+    .project-content a {
+      color: var(--text);
+      border-bottom: 1px solid var(--border-strong);
+      transition: border-color var(--dur-fast) var(--ease-out);
+    }
+
+    .project-content a:hover {
+      border-color: var(--text);
+    }
+
+    .lang-block + .lang-block {
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .lang-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    /* Interactive demo section */
+    .project-interactive {
+      padding: clamp(60px, 9vh, 110px) 0;
+      border-top: 1px solid var(--border);
       display: flex;
-      flex-flow: column;
-      align-items: center;
-      align-content: center;
-      width: 90vw;
+      flex-direction: column;
+      gap: 28px;
     }
 
-    .shots {
-      display: flex;
-      flex-flow: row;
-      align-items: center;
-    }
-
-    .dvShots img {
-      flex-basis: 200px;
-      height: 100px;
-    }
-
-    .credits {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-
-    }
-
-    .credits p {
+    .project-interactive .section-heading {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
       text-align: center;
-      padding: 4px;
-      font-size: 16px;
-
     }
 
-    .tks {
-      color: grey;
-      margin-top: 60px;
-      margin-bottom: 60px;
+    .interactive-frame {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 10;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
     }
 
-    .arrow {
-      margin: 0;
-      padding: 0;
-      font-size: 50px;
+    .interactive-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
-    .arrow a,
-    #up {
-      color: grey;
-      width: 100vw;
-      transition: 200ms ease;
+    .project-interactive .project-content {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .arrow a:hover,
-    #up:hover {
-      color: rgb(0, 0, 0);
+    /* Credits */
+    .project-credits {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      padding: clamp(60px, 9vh, 110px) 0;
+      border-top: 1px solid var(--border);
     }
 
-    .about {
-      margin: 0;
-    }
-
-    #arrowUp {
-      margin-bottom: 40px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 22px;
-      }
-
-      h2 {
-        font-size: 16px;
-      }
-
-      p {
-        font-size: 12px;
-      }
-
-      .credits {
-        width: 200px;
-      }
-
-    }
-    .interaction{
+    .credit-card {
       display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      transition: border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
     }
-    iframe{
-      margin-top: 20px;
+
+    .credit-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .credit-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .credit-value {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    /* Thanks / footer */
+    .project-thanks {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: clamp(80px, 12vh, 140px) 0 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .thanks-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .thanks-mark::before,
+    .thanks-mark::after {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent-gradient);
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 32px 0;
+      margin-top: clamp(40px, 6vh, 64px);
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .scroll-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      transition: color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    }
+
+    .scroll-top:hover {
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .project-body {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .project-aside {
+        position: static;
+      }
+
+      .project-credits {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
-
 <body>
-  <main class="main">
-    <p class="arrow"><a href="https://kevinjover.com">&larr;</a></p>
-    <h1 id="start">Outbound Launch - <a href="https://www.outbound.com/">Outbound.com</a></h1>
-    <div class="proj1">
+  <!-- Top bar -->
+  <header class="project-top">
+    <div class="project-top-inner">
+      <a class="back-link" href="https://kevinjover.com">
+        <span class="arrow">&larr;</span>
+        <span>Back to portfolio</span>
+      </a>
+    </div>
+  </header>
 
-      <iframe src="https://player.vimeo.com/video/1150121590?badge=0&autopause=0"
-        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="outbound.com (1080p)">
+  <main class="container project-page">
+    <!-- Hero -->
+    <section class="project-hero reveal">
+      <span class="eyebrow">Project / Outbound.com</span>
+      <h1 class="project-title">Outbound <em>·</em> Launch</h1>
+      <p class="project-lead">Translating a technical AI-marketing product into a clear, dynamic visual narrative — and connecting motion design to real front-end with an interactive React demo.</p>
+    </section>
+
+    <!-- Video -->
+    <div class="project-video reveal">
+      <iframe
+        src="https://player.vimeo.com/video/1150121590?badge=0&autopause=0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        title="outbound.com (1080p)">
       </iframe>
     </div>
 
-    <h2 class="about">Sobre o projeto | About the project</h2>
+    <!-- Body -->
+    <section class="project-body">
+      <aside class="project-aside reveal">
+        <span class="eyebrow">About</span>
+        <h2>Sobre o projeto / About the project</h2>
+      </aside>
 
-    <p>Fui convidado pela <strong><a href="https://www.outbound.com/">outbound.com</a></strong> para traduzir
-      visualmente as principais funcionalidades da plataforma por meio deste vídeo.
-
-      A empresa utiliza inteligência artificial para escanear sites automaticamente, criar e publicar campanhas de
-      anúncios gratuitas, entregando anúncios segmentados diretamente ao público ideal de cada negócio.
-
-      O desafio foi transformar um produto técnico em uma narrativa visual clara, dinâmica e fácil de entender,
-      destacando o valor da automação e da tecnologia aplicada ao marketing digital.</p>
-
-    <span>_________</span>
-
-    <p>I was invited by <strong><a href="https://www.outbound.com/">outbound.com</a></strong> to visually explain the
-      platform’s core features through this video.
-
-      The company uses artificial intelligence to scan websites, automatically create, and publish free advertising
-      campaigns that deliver targeted ads directly to each business’s ideal customer.
-
-      The main challenge was translating a technical product into a clear, engaging, and easy-to-understand visual
-      narrative, highlighting the power of automation and AI-driven marketing.</p>
-
-    
-    </div>
-
-    <section class="interaction">
-      <h2>Interactive Color Selector</h2>
-      <iframe src="https://kevinjovermotion.github.io/colorSelector/" scrolling="no"
-        style="width:80vw; height:550px; border-radius:4px; overflow:hidden;"></iframe>
-
-      <p>This is a live demo of an interactive color selector component built with React.
-        You can test it yourself — select a color, hover over the icons to preview actions, and click to see how the
-        animations respond dynamically to user input.
-
-        The Edit and Trash icons were animated in After Effects and exported as JSON (Lottie) files, then implemented
-        into the interface to connect motion design with real front-end functionality.</p>
-
-      <p>Este é um exemplo interativo de um componente de seleção de cores desenvolvido em React.
-        Você pode testar diretamente — selecione uma cor, passe o mouse sobre os ícones para visualizar as ações e
-        clique para ver como as animações respondem dinamicamente à interação do usuário.
-
-        Os ícones de Editar e Excluir foram animados no After Effects e exportados como arquivos JSON (Lottie), sendo
-        depois implementados na interface para integrar motion design com funcionalidade real em front-end.</p>
+      <div class="project-content reveal">
+        <div class="lang-block">
+          <span class="lang-tag">PT</span>
+          <p>Fui convidado pela <a href="https://www.outbound.com/" target="_blank" rel="noopener">outbound.com</a> para traduzir visualmente as principais funcionalidades da plataforma por meio deste vídeo.</p>
+          <p>A empresa utiliza inteligência artificial para escanear sites automaticamente, criar e publicar campanhas de anúncios gratuitas, entregando anúncios segmentados diretamente ao público ideal de cada negócio.</p>
+          <p>O desafio foi transformar um produto técnico em uma narrativa visual clara, dinâmica e fácil de entender, destacando o valor da automação e da tecnologia aplicada ao marketing digital.</p>
+        </div>
+        <div class="lang-block">
+          <span class="lang-tag">EN</span>
+          <p>I was invited by <a href="https://www.outbound.com/" target="_blank" rel="noopener">outbound.com</a> to visually explain the platform's core features through this video.</p>
+          <p>The company uses artificial intelligence to scan websites, automatically create, and publish free advertising campaigns that deliver targeted ads directly to each business's ideal customer.</p>
+          <p>The main challenge was translating a technical product into a clear, engaging, and easy-to-understand visual narrative, highlighting the power of automation and AI-driven marketing.</p>
+        </div>
+      </div>
     </section>
-    <div class="dvShots">
 
-      <img src="/LogoReveal.gif" alt="logo animation">
-    </div>
-    <div class="credits">
-      <h3><strong>Créditos | Project Team</strong></h3>
-      <span>
-        <p><strong>Animation:</strong> Kevin Jover</p>
-      </span>
-      <span>
-        <p><strong>Design:</strong> Outbound.com</p>
-      </span>
-      <p class="tks">Thanks for watching!</p>
-    </div>
+    <!-- Interactive demo -->
+    <section class="project-interactive">
+      <div class="project-aside reveal" style="position: static; align-items: center; text-align: center;">
+        <span class="eyebrow">Live demo</span>
+        <h2 class="section-heading">Interactive Color Selector</h2>
+      </div>
 
-    <p class="arrow" onclick="scrollToStart()" id="arrowUp"><a>&uarr;</a></p>
+      <div class="interactive-frame reveal">
+        <iframe
+          src="https://kevinjovermotion.github.io/colorSelector/"
+          scrolling="no"
+          title="Interactive Color Selector">
+        </iframe>
+      </div>
+
+      <div class="project-content reveal">
+        <div class="lang-block" style="border-top: none; padding-top: 0;">
+          <span class="lang-tag">EN</span>
+          <p>This is a live demo of an interactive color selector component built with React. You can test it yourself — select a color, hover over the icons to preview actions, and click to see how the animations respond dynamically to user input.</p>
+          <p>The Edit and Trash icons were animated in After Effects and exported as JSON (Lottie) files, then implemented into the interface to connect motion design with real front-end functionality.</p>
+        </div>
+        <div class="lang-block">
+          <span class="lang-tag">PT</span>
+          <p>Este é um exemplo interativo de um componente de seleção de cores desenvolvido em React. Você pode testar diretamente — selecione uma cor, passe o mouse sobre os ícones para visualizar as ações e clique para ver como as animações respondem dinamicamente à interação do usuário.</p>
+          <p>Os ícones de Editar e Excluir foram animados no After Effects e exportados como arquivos JSON (Lottie), sendo depois implementados na interface para integrar motion design com funcionalidade real em front-end.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Asset -->
+
+    <!-- Credits -->
+    <section class="project-credits">
+      <div class="credit-card reveal">
+        <span class="credit-label">Animation</span>
+        <span class="credit-value">Kevin Jover</span>
+      </div>
+      <div class="credit-card reveal">
+        <span class="credit-label">Client</span>
+        <span class="credit-value">Outbound.com</span>
+      </div>
+    </section>
+
+    <!-- Thanks -->
+    <section class="project-thanks reveal">
+      <span class="thanks-mark">Thanks for watching</span>
+      <a class="scroll-top" onclick="scrollToStart()">&uarr; Back to top</a>
+    </section>
+
+    <div class="project-footer">
+      <span>&copy; Kevin Jover — Outbound Launch</span>
+      <a class="scroll-top" href="https://kevinjover.com">kevinjover.com &rarr;</a>
+    </div>
   </main>
 
+  <!-- Custom cursor (matches main site) -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
+  <script src="../script.js"></script>
+  <script>
+    function scrollToStart() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Reveal on scroll (matches main site pattern)
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
 </body>
+</html>
